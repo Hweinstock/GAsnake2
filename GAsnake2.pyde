@@ -1,12 +1,12 @@
 from GA import brain
-trainer = brain(100)
+trainer = brain(10)
 screen_w = 600
 screen_h = 600
 
 def setup():
     size(screen_w, screen_h)
     background(0)
-    frameRate(30)
+    frameRate(60)
     trainer.generateSnakes()
 
 def draw():

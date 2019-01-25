@@ -89,10 +89,6 @@ class snake:
             food_right = self.checkFoodDirection(-PI/2)
             food_straight = self.checkFoodDirection(0)
         
-        if [x for x in [food_left, food_right, food_straight] if x == 0] != []:
-            print [food_left, food_right, food_straight]
-            pass
-        
         o = [left, straight, right, food_left, food_right, food_straight]
 
         return o
