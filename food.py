@@ -13,13 +13,15 @@ class food:
         self.x = self.coords[0]
         self.y = self.coords[1]
         self.col = col
+        self.best = False
         
     def spawn(self):
         return [floor(random(screen_w/self.w))*self.w, floor(random(screen_h/self.h))*self.h]
     
     def show(self):
-        fill(self.col[0], self.col[1], self.col[2])
-        rect(self.x, self.y, self.w, self.h)
+        if self.best or True:
+            fill(self.col[0], self.col[1], self.col[2])
+            rect(self.x, self.y, self.w, self.h)
     
     def update(self):
         self.show()

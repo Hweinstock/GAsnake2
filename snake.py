@@ -18,12 +18,14 @@ class snake:
         self.col = col
         self.moveNum = 1
         self.dead = False
-        self.food = food(col)
         self.fitness = 0
         self.maxMoves = 300
+        self.best = False
+        self.food = food(col)
+        self.sinceFood = 0
         
         if nn == None:
-            self.nn = NeuralNetwork(5, 6, 3)
+            self.nn = NeuralNetwork(6, 6, 3)
         else:
             self.nn = nn
     
@@ -36,10 +38,14 @@ class snake:
         self.dead = False
         self.fitness = 0
         self.food = food(self.col)
+        self.best = False
+        self.food.best = False
+        self.sinceFood = 0
         
     def show(self):
-        fill(color(self.col[0], self.col[1], self.col[2]))
-        rect(self.x, self.y, self.w, self.h)
+        if self.best or True:
+            fill(color(self.col[0], self.col[1], self.col[2]))
+            rect(self.x, self.y, self.w, self.h)
     
     def kill(self):
         self.dead = True
@@ -55,20 +61,40 @@ class snake:
         newC = [(self.x + round(cos(self.direction + ang))), (self.y+round(sin(self.direction + ang)))]
         if self.checkBounds(newC[0], newC[1]) or [t for t in self.tail if t == newC] != []:
             return 0.0
-        return 1.0
-      
+        return 1.0    
+    
+    def checkFoodDirection(self, ang):
+        dir = self.direction + ang
+        tx = self.x * 1
+        ty = self.y * 1
+        while not self.checkBounds(tx, ty):
+            tx += round(cos(dir))
+            ty += round(sin(dir))
+            if tx == self.food.x and ty == self.food.y:
+                return 0
+        return 1
+    
     def findDistances(self):
-
+        
         left = self.checkDirection(PI/2)
         right = self.checkDirection(-PI/2)
         straight = self.checkDirection(0)
-    
-        fx = (self.food.x - self.x)
-        fy = (self.food.y - self.y)
-        #fv = abs(self.direction - atan2(fy, fx))
-    
-        o = [left, straight, right, fx/screen_w, fy/screen_h]
-        #o = [(fv+PI)/(2*PI)]
+        
+        food_left = 1
+        food_right = 1
+        food_straight = 1
+        
+        if self.x == self.food.x or self.y == self.food.y:
+            food_left = self.checkFoodDirection(PI/2)
+            food_right = self.checkFoodDirection(-PI/2)
+            food_straight = self.checkFoodDirection(0)
+        
+        if [x for x in [food_left, food_right, food_straight] if x == 0] != []:
+            print [food_left, food_right, food_straight]
+            pass
+        
+        o = [left, straight, right, food_left, food_right, food_straight]
+
         return o
             
     def updateDirection(self):
@@ -88,12 +114,13 @@ class snake:
             self.tail[-1] = [self.x, self.y]
             
     def displayTail(self):
-        for t in self.tail:
-            if t[0] == self.x and t[1] == self.y and len(self.tail) != 1:
-                self.kill()
-            else:
-                fill(color(self.col[0], self.col[1], self.col[2]))
-                rect(t[0], t[1], self.w, self.h)
+        if self.best or True:
+            for t in self.tail:
+                if t[0] == self.x and t[1] == self.y and len(self.tail) != 1:
+                    self.kill()
+                else:
+                    fill(color(self.col[0], self.col[1], self.col[2]))
+                    rect(t[0], t[1], self.w, self.h)
                 
     def updateFood(self):
         self.food.update()
@@ -101,15 +128,16 @@ class snake:
         if self.x == self.food.x and self.y == self.food.y:
             self.tailLength += 1
             self.fitness += 30
+            self.sinceFood = 0
             self.food.respawn()
             
     def updateFitness(self, oldD):
-        #self.fitness += 1
+        self.fitness += 1
         newD = sqrt((self.x - self.food.x)**2 + (self.y - self.food.y)**2)
         if newD > oldD:
-            self.fitness += 1.0
+            self.fitness += 2.0
         if oldD > newD:
-            self.fitness -= 1.5
+            self.fitness -= 0
         
     def update(self):
         
@@ -119,7 +147,7 @@ class snake:
                 
             distanceToFood = sqrt((self.x - self.food.x)**2 + (self.y - self.food.y)**2)
 
-            if self.checkBounds(self.x, self.y) or self.fitness < 0:
+            if self.checkBounds(self.x, self.y) or self.sinceFood > 300:
                 self.kill()
                 
             # elif self.moveNum >= self.maxMoves:
@@ -132,9 +160,9 @@ class snake:
                 self.y += self.h*round(sin(self.direction))
                 self.show()
                 self.displayTail()
-                    
+                self.sinceFood += 1
                 self.updateFitness(distanceToFood)
-
+                
                 self.updateFood()
         
         

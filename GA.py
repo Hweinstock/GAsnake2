@@ -16,7 +16,7 @@ class brain:
         self.gen = 1
         self.genSize = genSize
         self.cutOff = 0.5
-        self.mutationRate = 0.05
+        self.mutationRate = 0.20
         self.delta = 0.2
         self.snakes = self.generateSnakes()
         self.mutationDelta = 0.01
@@ -105,6 +105,8 @@ class brain:
             newGen.append(self.breed(parent1, parent2))
         for i in alphas: 
             i.reset()
+        alphas[0].best = True
+        alphas[0].food.best = True
         return self.generateSnakes(alphas + newGen)
         
     def sortFitness(self):
