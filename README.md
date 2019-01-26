@@ -9,10 +9,4 @@ For Testing Use the following parameters,
 	Mutation Delta: 0.2
 
 	Use Randomseed 0
-
-Current Problems:
-
-	Only turns left or only turns right
-  
-	The degree of mutations shoild scale with a value rather than being purely random
   
