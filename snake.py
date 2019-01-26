@@ -60,7 +60,7 @@ class snake:
         return False
     
     def checkDirection(self, ang):
-        newC = [(self.x + round(cos(self.direction + ang))), (self.y+round(sin(self.direction + ang)))]
+        newC = [(self.x + self.w*round(cos(self.direction + ang))), (self.y+self.h*round(sin(self.direction + ang)))]
         if self.checkBounds(newC[0], newC[1]) or [t for t in self.tail if t == newC] != []:
             return 0.0
         return 1.0    
