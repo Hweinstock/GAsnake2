@@ -1,5 +1,9 @@
 from GA import brain
-trainer = brain(10)
+import csv
+testing = True
+record = 'record.csv'
+
+trainer = brain(1000)
 screen_w = 600
 screen_h = 600
 
@@ -20,3 +24,14 @@ def draw():
     text("Mutation Delta: "+str(trainer.delta), 10, 220)
     text("Cut Off: "+str(trainer.cutOff), 10, 270)
     text("Gen Size: "+str(trainer.genSize), 10, 320)
+
+def keyPressed():
+    if key == 'p' and testing:
+        with open(record, "w") as output:
+            writer = csv.writer(output, lineterminator='\n')
+            for i in range(len(trainer.bests)):
+                writer.writerow([i,trainer.bests[i], trainer.averages[i]])  
+            exit()
+
+        
+    

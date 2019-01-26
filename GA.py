@@ -23,6 +23,9 @@ class brain:
         self.best = []
         self.average = []
         
+        self.bests = []
+        self.averages = []
+        
     def generateSnakes(self, newGen = []):
         if self.gen == 1:
             return [snake(None, randomColor(), self.randomDirection()) for i in range(self.genSize)]
@@ -46,6 +49,8 @@ class brain:
             self.gen+=1
             self.best = max([s.fitness for s in self.snakes])
             self.average = self.averageFitness()
+            self.bests.append(self.best)
+            self.averages.append(self.average)
             self.sortFitness()
             self.snakes = self.birth(self.snakes[:ceil(self.genSize*self.cutOff)])
             self.update()

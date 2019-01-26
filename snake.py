@@ -25,7 +25,7 @@ class snake:
         self.sinceFood = 0
         
         if nn == None:
-            self.nn = NeuralNetwork(6, 6, 3)
+            self.nn = NeuralNetwork(4, 6, 3)
         else:
             self.nn = nn
     
@@ -63,6 +63,13 @@ class snake:
             return 0.0
         return 1.0    
     
+    def dirFood(self):
+        relX = self.x - self.food.x
+        relY = self.food.y - self.y
+        absoluteAngle = atan2(relY, relX) % TAU
+        relTurn = (absoluteAngle - self.direction) % TAU
+        return relTurn / TAU
+    
     def checkFoodDirection(self, ang):
         dir = self.direction + ang
         tx = self.x * 1
@@ -80,16 +87,19 @@ class snake:
         right = self.checkDirection(-PI/2)
         straight = self.checkDirection(0)
         
-        food_left = 1
-        food_right = 1
-        food_straight = 1
+        # food_left = 1
+        # food_right = 1
+        # food_straight = 1
         
-        if self.x == self.food.x or self.y == self.food.y:
-            food_left = self.checkFoodDirection(PI/2)
-            food_right = self.checkFoodDirection(-PI/2)
-            food_straight = self.checkFoodDirection(0)
+        # if self.x == self.food.x or self.y == self.food.y:
+        #     food_left = self.checkFoodDirection(PI/2)
+        #     food_right = self.checkFoodDirection(-PI/2)
+        #     food_straight = self.checkFoodDirection(0)
         
-        o = [left, straight, right, food_left, food_right, food_straight]
+        # o = [left, straight, right, food_left, food_right, food_straight]
+        
+        fv = self.dirFood()
+        o = [left, straight, right, fv]
 
         return o
             
@@ -128,10 +138,10 @@ class snake:
             self.food.respawn()
             
     def updateFitness(self, oldD):
-        self.fitness += 1
+        self.fitness += 0.01
         newD = sqrt((self.x - self.food.x)**2 + (self.y - self.food.y)**2)
         if newD > oldD:
-            self.fitness += 2.0
+            self.fitness += 0.0
         if oldD > newD:
             self.fitness -= 0
         
