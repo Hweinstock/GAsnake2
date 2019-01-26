@@ -1,6 +1,8 @@
 from snake import snake
+import copy as c
 screen_width = 600.0
 screen_height = 600.0
+randomSeed(0)
 
 def randomColor():
     return (random(0, 255), random(0, 255), random(0, 255))
@@ -20,8 +22,8 @@ class brain:
         self.delta = 0.2
         self.snakes = self.generateSnakes()
         self.mutationDelta = 0.01
-        self.best = []
-        self.average = []
+        self.bestFitness = 0
+        self.average = 0
         
         self.bests = []
         self.averages = []
@@ -42,16 +44,16 @@ class brain:
             fSum += s.fitness
         
         return fSum/len(self.snakes)
-        
+    
     def update(self):
         if self.checkDead():
-            #print self.snakes
             self.gen+=1
-            self.best = max([s.fitness for s in self.snakes])
             self.average = self.averageFitness()
-            self.bests.append(self.best)
+            self.bests.append(self.bestFitness)
             self.averages.append(self.average)
             self.sortFitness()
+            self.best = c.deepcopy(self.snakes[0])
+            self.bestFitness = self.best.fitness
             self.snakes = self.birth(self.snakes[:ceil(self.genSize*self.cutOff)])
             self.update()
         else:

@@ -1,5 +1,5 @@
 import copy as c
-
+randomSeed(0)
 def multiply(a, b):
     if a.cols != b.rows:
         print "A Columns does not equal B Columns"
