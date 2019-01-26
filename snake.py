@@ -124,15 +124,15 @@ class snake:
             self.tail[-1] = [self.x, self.y]
 
     def displayTail(self):
-        if not self.testing:
-            if self.best:
-                fill(255)
+        if self.best:
+            fill(255)
+        else:
+            fill(color(self.col[0], self.col[1], self.col[2]))
+        for t in self.tail:
+            if t[0] == self.x and t[1] == self.y and len(self.tail) != 1:
+                self.kill()
             else:
-                fill(color(self.col[0], self.col[1], self.col[2]))
-            for t in self.tail:
-                if t[0] == self.x and t[1] == self.y and len(self.tail) != 1:
-                    self.kill()
-                else:
+                if not self.testing:
                     rect(t[0], t[1], self.w, self.h)
 
     def updateFood(self):
