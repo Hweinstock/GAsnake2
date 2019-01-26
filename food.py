@@ -1,6 +1,6 @@
 screen_w = 600
 screen_h = 600
-
+randomSeed(0)
 def randomColor():
     return (random(0, 255), random(0, 255), random(0, 255))
 
@@ -19,9 +19,12 @@ class food:
         return [floor(random(screen_w/self.w))*self.w, floor(random(screen_h/self.h))*self.h]
     
     def show(self):
-        if self.best or True:
+        if self.best:
+            fill(255)
+        else:
             fill(self.col[0], self.col[1], self.col[2])
-            rect(self.x, self.y, self.w, self.h)
+            
+        rect(self.x, self.y, self.w, self.h)
     
     def update(self):
         self.show()

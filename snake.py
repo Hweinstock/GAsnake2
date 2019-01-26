@@ -25,7 +25,7 @@ class snake:
         self.sinceFood = 0
         
         if nn == None:
-            self.nn = NeuralNetwork(6, 6, 3)
+            self.nn = NeuralNetwork(4, 6, 3)
         else:
             self.nn = nn
     
@@ -43,9 +43,11 @@ class snake:
         self.sinceFood = 0
         
     def show(self):
-        if self.best or True:
+        if self.best:
+            fill(255)
+        else:
             fill(color(self.col[0], self.col[1], self.col[2]))
-            rect(self.x, self.y, self.w, self.h)
+        rect(self.x, self.y, self.w, self.h)
     
     def kill(self):
         self.dead = True
@@ -62,6 +64,13 @@ class snake:
         if self.checkBounds(newC[0], newC[1]) or [t for t in self.tail if t == newC] != []:
             return 0.0
         return 1.0    
+    
+    def dirFood(self):
+        relX = self.x - self.food.x
+        relY = self.food.y - self.y
+        absoluteAngle = atan2(relY, relX) % TAU
+        relTurn = (absoluteAngle - self.direction) % TAU
+        return relTurn / TAU
     
     def checkFoodDirection(self, ang):
         dir = self.direction + ang
@@ -80,16 +89,19 @@ class snake:
         right = self.checkDirection(-PI/2)
         straight = self.checkDirection(0)
         
-        food_left = 1
-        food_right = 1
-        food_straight = 1
+        # food_left = 1
+        # food_right = 1
+        # food_straight = 1
         
-        if self.x == self.food.x or self.y == self.food.y:
-            food_left = self.checkFoodDirection(PI/2)
-            food_right = self.checkFoodDirection(-PI/2)
-            food_straight = self.checkFoodDirection(0)
+        # if self.x == self.food.x or self.y == self.food.y:
+        #     food_left = self.checkFoodDirection(PI/2)
+        #     food_right = self.checkFoodDirection(-PI/2)
+        #     food_straight = self.checkFoodDirection(0)
         
-        o = [left, straight, right, food_left, food_right, food_straight]
+        # o = [left, straight, right, food_left, food_right, food_straight]
+        
+        fv = self.dirFood()
+        o = [left, straight, right, fv]
 
         return o
             
@@ -110,13 +122,15 @@ class snake:
             self.tail[-1] = [self.x, self.y]
             
     def displayTail(self):
-        if self.best or True:
-            for t in self.tail:
-                if t[0] == self.x and t[1] == self.y and len(self.tail) != 1:
-                    self.kill()
-                else:
-                    fill(color(self.col[0], self.col[1], self.col[2]))
-                    rect(t[0], t[1], self.w, self.h)
+        if self.best:
+            fill(255)
+        else:
+            fill(color(self.col[0], self.col[1], self.col[2]))
+        for t in self.tail:
+            if t[0] == self.x and t[1] == self.y and len(self.tail) != 1:
+                self.kill()
+            else:
+                rect(t[0], t[1], self.w, self.h)
                 
     def updateFood(self):
         self.food.update()
@@ -128,10 +142,10 @@ class snake:
             self.food.respawn()
             
     def updateFitness(self, oldD):
-        self.fitness += 1
+        self.fitness += 0.01
         newD = sqrt((self.x - self.food.x)**2 + (self.y - self.food.y)**2)
         if newD > oldD:
-            self.fitness += 2.0
+            self.fitness += 0.0
         if oldD > newD:
             self.fitness -= 0
         
