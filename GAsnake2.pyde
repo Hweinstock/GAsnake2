@@ -29,8 +29,9 @@ def keyPressed():
     if key == 'p' and testing:
         with open(record, "w") as output:
             writer = csv.writer(output, lineterminator='\n')
+            writer.writerow(['Gen', 'Best', 'Average'])
             for i in range(len(trainer.bests)):
-                writer.writerow([i,trainer.bests[i], trainer.averages[i]])  
+                writer.writerow([i+1,trainer.bests[i], trainer.averages[i]])  
             exit()
 
         
