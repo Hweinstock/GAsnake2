@@ -13,38 +13,40 @@ def listSum(l):
     return l[0] + sum(l[1:])
 
 class brain:
-    
-    def __init__(self, genSize):
+
+    def __init__(self, genSize, testing):
         self.gen = 1
         self.genSize = genSize
         self.cutOff = 0.5
         self.mutationRate = 0.20
         self.delta = 0.2
+        self.testing = testing
         self.snakes = self.generateSnakes()
         self.mutationDelta = 0.01
         self.bestFitness = 0
         self.average = 0
-        
         self.bests = []
         self.averages = []
-        
+        if self.testing:
+            randomSeed(0)
+
     def generateSnakes(self, newGen = []):
         if self.gen == 1:
-            return [snake(None, randomColor(), self.randomDirection()) for i in range(self.genSize)]
+            return [snake(None, randomColor(), self.randomDirection(), self.testing) for i in range(self.genSize)]
         else:
             return newGen
-    
+
     def randomDirection(self):
         pDirections = [3*PI/2, 0, PI/2, PI]
         return pDirections[floor(random(len(pDirections)))]
-    
+
     def averageFitness(self):
         fSum = 0
         for s in self.snakes:
             fSum += s.fitness
-        
+
         return fSum/len(self.snakes)
-    
+
     def update(self):
         if self.checkDead():
             self.gen+=1
@@ -58,15 +60,15 @@ class brain:
             self.update()
         else:
             for s in [s for s in self.snakes if not s.dead]:
-                s.update() 
-    
+                s.update()
+
     def checkDead(self):
         for s in self.snakes:
             if s.dead == False:
                 return False
         else:
             return True
-    
+
     def breedWeights(self, aw, bw):
         o = aw.createCopy()
         for r in range(o.rows):
@@ -77,20 +79,20 @@ class brain:
                     current = o.values[r][c]
                     o.values[r][c] *= random(-1/current, 1/current)
         return o
-    
-    
+
+
     def breed(self, a, b):
 
         babyColor = (((a.col[0]+b.col[0])/2)+random(-1*self.delta, self.delta), ((a.col[1]+b.col[1])/2)+random(-1*self.delta, self.delta), ((a.col[2]+b.col[2])/2)+random(-1*self.delta, self.delta))
         babyNN = a.nn.createCopy()
-        
+
         babyNN.weights_i = self.breedWeights(a.nn.weights_i, b.nn.weights_i)
         babyNN.weights_h = self.breedWeights(a.nn.weights_h, b.nn.weights_h)
         babyNN.bias_i = self.breedWeights(a.nn.bias_i, b.nn.bias_i)
         babyNN.bias_h = self.breedWeights(a.nn.bias_h, b.nn.bias_h)
-        
-        return snake(babyNN, babyColor, self.randomDirection())
-    
+
+        return snake(babyNN, babyColor, self.randomDirection(), self.testing)
+
     def selectParent(self, parents):
         s = 0
         r = random(listSum([a.fitness for a in parents]))
@@ -102,7 +104,7 @@ class brain:
         lowest = min([s.fitness for s in self.snakes])
         for a in alphas:
             a.fitness += abs(lowest)
-            
+
     def birth(self, alphas):
         self.adjustFitness(alphas)
         newGen = []
@@ -110,11 +112,11 @@ class brain:
             parent1 = self.selectParent(alphas)
             parent2 = self.selectParent([a for a in alphas if a != parent1])
             newGen.append(self.breed(parent1, parent2))
-        for i in alphas: 
+        for i in alphas:
             i.reset()
         alphas[0].best = True
         alphas[0].food.best = True
         return self.generateSnakes(alphas + newGen)
-        
+
     def sortFitness(self):
         self.snakes.sort(key=lambda x: x.fitness, reverse = True)
