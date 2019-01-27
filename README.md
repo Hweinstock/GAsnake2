@@ -1,6 +1,6 @@
 # GAsnake2
 
-For Testing Use the following parameters, 
+For Testing use the following parameters, 
 
 	Generation Size: 500
 
