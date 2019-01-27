@@ -20,7 +20,7 @@ class dataCollector:
                 writer.writerows(t.values)
                 writer.writerow([''])
     
-    def readInWeights():
+    def readInWeights(self):
         weights = [[],[],[],[]]
         i = 0
     

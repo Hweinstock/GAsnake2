@@ -9,7 +9,7 @@ screen_h = 600
 
 data = dataCollector(bestNN, record)
 
-singleSnakeMode = False
+singleSnakeMode = True
 
 if singleSnakeMode:
     trainer = brain(1)
