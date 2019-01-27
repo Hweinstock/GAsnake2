@@ -7,7 +7,7 @@ screen_h = 600.0
 
 class snake:
 
-    def __init__(self, nn, col, dir, testing):
+    def __init__(self, nn, col, dir):
         self.direction = dir
         self.w = screen_w/50
         self.h = screen_h/50
@@ -21,9 +21,8 @@ class snake:
         self.fitness = 0
         self.maxMoves = 300
         self.best = False
-        self.food = food(col, testing)
+        self.food = food(col)
         self.sinceFood = 0
-        self.testing = testing
 
         if nn == None:
             self.nn = NeuralNetwork(4, 6, 3)
@@ -38,18 +37,17 @@ class snake:
         self.moveNum = 1
         self.dead = False
         self.fitness = 0
-        self.food = food(self.col, self.testing)
+        self.food = food(self.col)
         self.best = False
         self.food.best = False
         self.sinceFood = 0
 
     def show(self):
-        if not self.testing:
-            if self.best:
-                fill(255)
-            else:
-                fill(color(self.col[0], self.col[1], self.col[2]))
-            rect(self.x, self.y, self.w, self.h)
+        if self.best:
+            fill(255)
+        else:
+            fill(color(self.col[0], self.col[1], self.col[2]))
+        rect(self.x, self.y, self.w, self.h)
 
     def kill(self):
         self.dead = True
@@ -132,8 +130,7 @@ class snake:
             if t[0] == self.x and t[1] == self.y and len(self.tail) != 1:
                 self.kill()
             else:
-                if not self.testing:
-                    rect(t[0], t[1], self.w, self.h)
+                rect(t[0], t[1], self.w, self.h)
 
     def updateFood(self):
         self.food.update()

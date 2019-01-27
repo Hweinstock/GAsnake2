@@ -14,25 +14,22 @@ def listSum(l):
 
 class brain:
 
-    def __init__(self, genSize, testing):
+    def __init__(self, genSize):
         self.gen = 1
         self.genSize = genSize
         self.cutOff = 0.5
         self.mutationRate = 0.20
         self.delta = 0.2
-        self.testing = testing
         self.snakes = self.generateSnakes()
         self.mutationDelta = 0.01
         self.bestFitness = 0
         self.average = 0
         self.bests = []
         self.averages = []
-        if self.testing:
-            randomSeed(0)
 
     def generateSnakes(self, newGen = []):
         if self.gen == 1:
-            return [snake(None, randomColor(), self.randomDirection(), self.testing) for i in range(self.genSize)]
+            return [snake(None, randomColor(), self.randomDirection()) for i in range(self.genSize)]
         else:
             return newGen
 
@@ -51,11 +48,11 @@ class brain:
         if self.checkDead():
             self.gen+=1
             self.average = self.averageFitness()
-            self.bests.append(self.bestFitness)
-            self.averages.append(self.average)
             self.sortFitness()
             self.best = c.deepcopy(self.snakes[0])
             self.bestFitness = self.best.fitness
+            self.bests.append(self.bestFitness)
+            self.averages.append(self.average)
             self.snakes = self.birth(self.snakes[:ceil(self.genSize*self.cutOff)])
             self.update()
         else:
@@ -91,7 +88,7 @@ class brain:
         babyNN.bias_i = self.breedWeights(a.nn.bias_i, b.nn.bias_i)
         babyNN.bias_h = self.breedWeights(a.nn.bias_h, b.nn.bias_h)
 
-        return snake(babyNN, babyColor, self.randomDirection(), self.testing)
+        return snake(babyNN, babyColor, self.randomDirection())
 
     def selectParent(self, parents):
         s = 0
