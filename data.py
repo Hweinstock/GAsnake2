@@ -1,4 +1,5 @@
 import csv
+
 class dataCollector:
     
     def __init__(self, NN_file, data_file):
