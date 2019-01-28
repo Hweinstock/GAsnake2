@@ -67,7 +67,7 @@ class brain:
             return True
     
     def mutate(self, v):
-        return v + random(self.mutationDelta*(-1 - v), self.mutationDelta*(1-v))
+        return v + random(self.mutationDelta*(-1.0 - v), self.mutationDelta*(1.0-v))
     
     def breedWeights(self, aw, bw):
         o = aw.createCopy()
