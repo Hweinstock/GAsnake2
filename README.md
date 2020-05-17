@@ -35,7 +35,7 @@ By the rules of snake, you can continue straight, turn left or turn right.
 
 ### Testing 
 
-The first test was extremely concerning since it revealed a large flaw or limit to how good the snake could get. Here is a graph illustrating the results:  
+All testing was done in collaboration with a friend. The first test was extremely concerning since it revealed a large flaw or limit to how good the snake could get. Here is a graph illustrating the results:  
 
 ![Graph 1](examples/old_input.png?raw=true "Title")
 
