@@ -6,11 +6,19 @@ A visual illustration of a neural network being trained to play snake.
 
 ## Purpose 
 
-This project servers no function other than to explore interesting and complex ideas on something simple like the arcade game snake. 
+This project serves no function other than to explore interesting and complex ideas such as genetic algorithms, neural networks, and together in a form of neuroevolution on something simple like the arcade game snake. 
+
+## Process 
+
+With this project, building it was only half the fun. After getting the AI up and running, extensive testing was done to see how the mutation rate, population size, and what input the snake was given affected the snake's ability to learn. 
+
+### Testing 
+
+
 
 ## Setup
 
-This project is build within the Processing software, but written in Python. In order to run the project, install Processing [here](https://processing.org/download/). As far as I am aware, this project should work on any operating system with Processing installed.   
+This project is built within the Processing software, but written in Python. In order to run the project, install Processing [here](https://processing.org/download/). As far as I am aware, this project should work on any operating system with Processing installed.   
 
 ## Usage 
 
