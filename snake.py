@@ -19,10 +19,10 @@ class snake:
         self.moveNum = 1
         self.dead = False
         self.fitness = 0
-        self.maxMoves = 300
         self.best = False
         self.food = food(col)
         self.sinceFood = 0
+        self.sinceFoodCap = 200
 
         if nn == None:
             self.nn = NeuralNetwork(4, 6, 3)
@@ -157,7 +157,7 @@ class snake:
 
             distanceToFood = sqrt((self.x - self.food.x)**2 + (self.y - self.food.y)**2)
 
-            if self.checkBounds(self.x, self.y) or self.sinceFood > 300:
+            if self.checkBounds(self.x, self.y) or self.sinceFood > self.sinceFoodCap:
                 self.kill()
 
             else:

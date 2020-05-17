@@ -17,9 +17,9 @@ class brain:
         self.gen = 1
         self.genSize = genSize
         self.cutOff = 0.2
-        self.mutationRate = 0.20
+        self.mutationRate = 0.2
         self.snakes = self.generateSnakes()
-        self.mutationDelta = 0.5
+        self.mutationDelta = 1
         self.bestFitness = 0
         self.average = 0
         self.bests = []
@@ -30,6 +30,9 @@ class brain:
         if self.gen == 1:
             return [snake(None, randomColor(), self.randomDirection()) for i in range(self.genSize)]
         else:
+            if self.gen > 100:
+                for snek in newGen:
+                    snek.sinceFoodCap = 2500
             return newGen
 
     def randomDirection(self):
@@ -67,7 +70,8 @@ class brain:
             return True
     
     def mutate(self, v):
-        return v + random(self.mutationDelta*(-1.0 - v), self.mutationDelta*(1.0-v))
+        return random(-1.0/v, 1.0/v)
+        #return v + random(self.mutationDelta*(-1.0 - v), self.mutationDelta*(1.0-v))
     
     def breedWeights(self, aw, bw):
         o = aw.createCopy()
@@ -76,7 +80,7 @@ class brain:
                 if random(1) > 0.5:
                     o.values[r][c] = bw.values[r][c]*1
                 if random(1) < self.mutationRate:
-                    o.values[r][c] = self.mutate(o.values[r][c])
+                    o.values[r][c] *= self.mutate(o.values[r][c])
         return o
 
     def breed(self, a, b):

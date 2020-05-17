@@ -19,7 +19,7 @@ if singleSnakeMode:
     trainer.snakes[0].nn.bias_i.values = readIn[2]
     trainer.snakes[0].nn.bias_h.values = readIn[3]
 else:
-    trainer = brain(50)
+    trainer = brain(500)
 
 def setup():
 
