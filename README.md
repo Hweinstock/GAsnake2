@@ -8,7 +8,15 @@ A visual illustration of a neural network being trained to play snake.
 
 This project serves no function other than to explore interesting and complex ideas such as genetic algorithms, neural networks, and together in a form of neuroevolution on something simple like the arcade game snake. 
 
-### Testing 
+## Setup
+
+This project is built within the Processing software, but written in Python. In order to run the project, install Processing [here](https://processing.org/download/). As far as I am aware, this project should work on any operating system with Processing installed.   
+
+## Process of Making
+
+With this project, building it was only half the fun. After getting the AI up and running, extensive testing was done to see how the mutation rate, population size, and what input the snake was given affected the snake's ability to learn. 
+
+#### Testing 
 
 The first test was extremely concerning since it revealed a large flaw or limit to how good the snake could get. Here is a graph illustrating the results:  
 
@@ -19,14 +27,6 @@ The snake's learning mode failed to accurately consider its tail. The snake comp
 ![Graph 2](examples/next_test.png?raw=true "Title")
 
 In this test, the snake is still learning around generation 125, whereas in the previous model, it stopped learning around gen 50. This fluctuation clearly indicates the snakes capability to learn was not capped in the same way. While ideally we could have continued to run this test to the same length of the first, the average snake had become so proficient that each gen would take a considerable amount of time. The average snake had an average evaluation of close to 1500. Considering it only ran for half the generations and has already improved vastly beyond the previous, we called it a success. We ran more tests and found that it still eventually plateus, but not nearly as quickly, indicating another hurdle to be explored in the snake's learning model. 
-
-## Process 
-
-With this project, building it was only half the fun. After getting the AI up and running, extensive testing was done to see how the mutation rate, population size, and what input the snake was given affected the snake's ability to learn. 
-
-## Setup
-
-This project is built within the Processing software, but written in Python. In order to run the project, install Processing [here](https://processing.org/download/). As far as I am aware, this project should work on any operating system with Processing installed.   
 
 ## Usage 
 
