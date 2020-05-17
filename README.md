@@ -18,7 +18,7 @@ With this project, building it was only half the fun. After getting the AI up an
 
 ### The Neural Network 
 
-Because the main purpose of this was to learn, I did not use any library to handle the neural networks for me. Instead, I created a simple file that allowed for 3 layer networks (1 hidden) in `nn.py`. Also, at the time, I didn't know any linear algebra so created `matrices.py` to handle all of that for me while learning about matrix operations and how they work.  
+Because the main purpose of this was to learn, I did not use any library to handle the neural networks for me. Instead, I created a simple file that allowed for 3 layer networks (1 hidden) in `nn.py`. Also, at the time, I didn't know any linear algebra so I wrote `matrices.py` to handle all of that for me while learning about matrix operations and how they work.  
 
 The final Neural Network used in testing had the following structure,  
 ##### 4 input neurons:  
@@ -35,15 +35,17 @@ By the rules of snake, you can continue straight, turn left or turn right.
 
 ### Testing 
 
-The first test was extremely concerning since it revealed a large flaw or limit to how good the snake could get. Here is a graph illustrating the results:  
+The snake was evaluated on a score system invented to better help its learning. Rather than evaluating the score as only food, it represents the overall performance of the snake by considering how quickly it got to food, how much time it 'wasted', and if it every made a blatantly incorrect decision, such as turning away from the food right before getting it.  
+
+Looking at one of the first tests, the results were extremely concerning since it revealed a large flaw or limit to how good the snake could get. Here is a graph illustrating the results:  
 
 ![Graph 1](examples/old_input.png?raw=true "Title")
 
-The snake's learning mode failed to accurately consider its tail. The snake completely stopped learning since it was not being fed enough information about its tail. So once the snake reached a certain length, it had an essentially random chance to die on every turn. After adjusting this by giving the snake more information abouts its tail, the next test was much more promising:  
+The snake's learning model failed to accurately consider its tail. The snake completely stopped learning since it was not being fed enough information about its tail. So once the snake reached a certain length, it had an essentially random chance to die on every turn. After adjusting this by giving the snake more information abouts its tail, the next test was much more promising:  
 
 ![Graph 2](examples/next_test.png?raw=true "Title")
 
-In this test, the snake is still learning around generation 125, whereas in the previous model, it stopped learning around gen 50. This fluctuation clearly indicates the snakes capability to learn was not capped in the same way. While ideally we could have continued to run this test to the same length of the first, the average snake had become so proficient that each gen would take a considerable amount of time. The average snake had an average evaluation of close to 1500. Considering it only ran for half the generations and has already improved vastly beyond the previous, we called it a success. We ran more tests and found that it still eventually plateus, but not nearly as quickly, indicating another hurdle to be explored in the snake's learning model. 
+In this test, the snake is still learning around generation 125, whereas in the previous model, it stopped learning around gen 50. This fluctuation clearly indicates the snakes capability to learn was not capped in the same way. While ideally we could have continued to run this test to the same length of the first, the average snake had become so proficient that each gen would take an unrealistic amount of time. The average snake had an average evaluation of close to 1500. Considering it only ran for half the generations and has already improved vastly beyond the previous, we called it a success. We ran more tests and found that it still eventually plateus, but not nearly as quickly, indicating another hurdle to be explored in the snake's learning model. 
 
 ## Usage 
 
