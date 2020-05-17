@@ -41,11 +41,11 @@ class Matrix:
             self.values.append(col)
         if rand:
             self.randomize()
-            
+
     def printOut(self):
         for r in self.values:
             print r
-            
+
     def randomize(self):
         for r in range(self.rows):
             for c in range(self.cols):
@@ -56,8 +56,11 @@ class Matrix:
             for c in range(self.cols):
                 self.values[r][c] = f(self.values[r][c])
 
+    def determinant(self):
+        pass
+
     def toVector(self):
         return [x[0] for x in self.values]
-    
+
     def createCopy(self):
         return c.deepcopy(self)

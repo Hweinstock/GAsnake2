@@ -30,6 +30,9 @@ class brain:
         if self.gen == 1:
             return [snake(None, randomColor(), self.randomDirection()) for i in range(self.genSize)]
         else:
+            if self.gen > 100:
+                for snek in newGen:
+                    snek.sinceFoodCap = 2500
             return newGen
 
     def randomDirection(self):
