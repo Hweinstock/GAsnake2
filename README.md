@@ -28,7 +28,7 @@ The final Neural Network used in testing had the following structure,
 **fv(food vector):** The relative turn angle to the food from the head.  
 
 ##### 6 hidden neurons. 
-(This could be another value that would be interesting to experiment with) We tried making this number very high, but it slowed down the tests, so we kept to low to allow for quicker run-time.  
+We tried making this number very high, but it slowed down the tests, so we kept to low to allow for quicker run-time. This could be another value that would be interesting to experiment with.  
 
 ##### 3 output neurons
 By the rules of snake, you can continue straight, turn left or turn right. 
