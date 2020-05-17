@@ -16,7 +16,24 @@ This project is built within the Processing software, but written in Python. In 
 
 With this project, building it was only half the fun. After getting the AI up and running, extensive testing was done to see how the mutation rate, population size, and what input the snake was given affected the snake's ability to learn. 
 
-#### Testing 
+### The Neural Network 
+
+Because the main purpose of this was to learn, I did not use any library to handle the neural networks for me. Instead, I created a simple file that allowed for 3 layer networks (1 hidden) in `nn.py`. Also, at the time, I didn't know any linear algebra so created `matrices.py` to handle all of that for me while learning about matrix operations and how they work.  
+
+The final Neural Network used in testing had the following structure,  
+##### 4 input neurons:  
+**left:** A boolean value(1 or 0) describing if there was a wall or tail directly to the left of the head of the snake.  
+**right:** A boolean value(1 or 0) describing if there was a wall or tail directly to the right of the head of the snake.  
+**straight:** A boolean value(1 or 0) describing if there was a wall or tail directly ahead of the head of the snake.  
+**fv(food vector):** The relative turn angle to the food from the head.  
+
+##### 6 hidden neurons. 
+(This could be another value that would be interesting to experiment with) We tried making this number very high, but it slowed down the tests, so we kept to low to allow for quicker run-time.  
+
+##### 3 output neurons
+By the rules of snake, you can continue straight, turn left or turn right. 
+
+### Testing 
 
 The first test was extremely concerning since it revealed a large flaw or limit to how good the snake could get. Here is a graph illustrating the results:  
 
