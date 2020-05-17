@@ -14,7 +14,15 @@ With this project, building it was only half the fun. After getting the AI up an
 
 ### Testing 
 
+The first test was extremely concerning since it revealed a large flaw or limit to how good the snake could get. Here is a graph illustrating the results:  
 
+[picture]
+
+The snake's learning mode failed to accurately consider its tail. The snake completely stopped learning since it was not being fed enough information about its tail. So once the snake reached a certain length, it had an essentially random chance to die on every turn. After adjusting this by giving the snake more information abouts its tail, the next test was much more promising:  
+
+[picture2]
+
+In this test, the snake is still learning around generation 125, whereas in the previous model, it stopped learning around gen 50. This fluctuation clearly indicates the snakes capability to learn was not capped in the same way. We ran more tests and found that it still eventually plateus, but not nearly as quickly, indicating another hurdle to be explored in the snake's learning model. 
 
 ## Setup
 
